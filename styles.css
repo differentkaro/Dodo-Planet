@@ -6,8 +6,8 @@
   --yellow-30: rgba(255, 199, 0, .3);
   --yellow-10: rgba(255, 199, 0, .1);
   --brown: #4F2C00;           /* Primary Brown */
-  --olive: #7C6E3B;           /* body copy (Figma #8A7A42, darkened ~10% to pass WCAG AA contrast) */
-  --green: #2A9556;           /* prices & accents (Figma #30A962, darkened ~12% to pass WCAG AA contrast) */
+  --olive: #8A7A42;           /* body copy */
+  --green: #30A962;           /* green 2 — prices & accents */
   --cream: #FFFBEF;           /* page background */
   --ink: #1B1819;
 
@@ -321,7 +321,7 @@ button, input { font: inherit; color: inherit; }
 .story blockquote { font-size: 16px; }
 .story figcaption { display: flex; flex-direction: column; gap: 8px; }
 .story figcaption b { font-size: 16px; font-weight: 600; line-height: 1.2; }
-.story figcaption span { font-size: 14px; color: #3BB86E; }
+.story figcaption span { font-size: 14px; color: var(--green); }
 .story-nav[hidden] { display: none; }
 .story-nav {
   margin: 24px 0 0; padding: 0 var(--gutter);
@@ -355,7 +355,7 @@ button, input { font: inherit; color: inherit; }
 .fc-row > .logo { margin-right: 80px; }
 .fc-cols { flex: 1; display: flex; justify-content: center; gap: 16px; }
 .fc-col { width: 288px; display: flex; flex-direction: column; gap: 24px; font-weight: 500; line-height: 1.4; }
-.fc-label { font-size: 12px; letter-spacing: .48px; color: var(--olive); }
+.fc-label { font-size: 12px; letter-spacing: .48px; color: var(--olive); opacity: .6; }
 .fc-col ul { display: flex; flex-direction: column; font-size: 16px; }
 .fc-col li a { display: inline-block; padding: 8px 0; }
 .fc-col ul { margin-block: -8px; }
