@@ -35,18 +35,21 @@
   if (track && prev && next) {
     const step = () => {
       const card = track.querySelector('.story');
-      return card ? card.getBoundingClientRect().width + 24 : track.clientWidth;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
     };
     const nav = prev.parentElement;
-    const update = () => {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      nav.hidden = max <= 0; // every story fits on screen: arrows aren't needed
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= max;
-    };
-    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-    track.addEventListener('scroll', update, { passive: true });
+    const max = () => track.scrollWidth - track.clientWidth - 2;
+    const update = () => { nav.hidden = max() <= 0; }; // every story fits on screen: arrows aren't needed
+    // Both arrows always look active (as in Figma): at either end they wrap around
+    prev.addEventListener('click', () => {
+      if (track.scrollLeft <= 2) track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+      else track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', () => {
+      if (track.scrollLeft >= max()) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
     window.addEventListener('resize', update, { passive: true });
     update();
   }
@@ -74,7 +77,7 @@
 
   // ---- Hero plate turns gently as you scroll (GPU transform only)
   if (!reduceMotion) {
-    const plates = document.querySelectorAll('.hero-plate, .hero-plate-m');
+    const plates = document.querySelectorAll('.hero-plate, .plate-m');
     let ticking = false;
     const spin = () => {
       const y = Math.min(window.scrollY, 1200);

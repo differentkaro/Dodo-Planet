@@ -44,42 +44,51 @@
 <main id="top">
 
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-label="For Dodo Lovers">
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title" class="sr-only">For Dodo Lovers</h1>
+
+    <!-- desktop / tablet composition (Figma 1280/1440/1920 frames) -->
     <div class="art hero-art">
-      <!-- outlined background rows -->
       <div class="rows" style="--x:-126.7;--y:105.7;--w:1720;--h:930" aria-hidden="true">
         <span class="outline row" style="--rx:-3352.35;--ry:0">For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="outline row" style="--rx:-3674.35;--ry:200">For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="outline row" style="--rx:-2767.35;--ry:400">For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="outline row" style="--rx:-3352.35;--ry:600">For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
       </div>
-
-      <!-- plate (desktop/tablet) -->
       <div class="hero-plate-clip" aria-hidden="true">
         <img class="hero-plate" src="assets/img/hero-plate.webp" alt="" width="1400" height="1400" fetchpriority="high">
       </div>
-
-      <!-- solid headline -->
-      <h1 class="headline">
+      <div aria-hidden="true">
         <span class="solid word" style="--x:813;--y:211.5">For</span>
         <span class="solid word" style="--x:910.5;--y:405.5">Dodo</span>
         <span class="solid word" style="--x:978.5;--y:598.5">Lovers</span>
-      </h1>
-
-      <!-- tilted order pill -->
+      </div>
       <div class="pill" style="--x:989.7;--y:753.9">
         <a class="btn btn-primary" data-order="glovo" href="#"><img src="assets/img/pin.svg" alt="" width="13" height="20">Order on Glovo</a>
         <a class="btn btn-soft" data-order="whatsapp" href="#"><img src="assets/img/whatsapp.svg" alt="" width="20" height="20">Order on Whatsapp</a>
       </div>
     </div>
 
-    <!-- mobile-only: stacked buttons + plate -->
-    <div class="hero-mobile">
-      <div class="stack-tilt">
+    <!-- phone composition (Figma mobile frame, 393 wide) -->
+    <div class="art-m hero-art-m">
+      <div class="plate-m-clip" aria-hidden="true">
+        <img class="plate-m" src="assets/img/hero-plate.webp" alt="" width="1400" height="1400">
+      </div>
+      <div class="rows" style="--x:-388.59;--y:133.14;--w:942.96;--h:509.75" aria-hidden="true">
+        <span class="outline row" style="--rx:-352.8;--ry:0">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-531.4;--ry:126.1">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-27.4;--ry:252.1">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-352.8;--ry:378.2">For Dodo Lovers For Dodo Lovers</span>
+      </div>
+      <div aria-hidden="true">
+        <span class="solid word" style="--x:99;--y:196.11">For</span>
+        <span class="solid word" style="--x:154.45;--y:317.42">Dodo</span>
+        <span class="solid word" style="--x:194.55;--y:440.99">Lovers</span>
+      </div>
+      <div class="pill pill-m" style="--x:196.5;--y:607.04">
         <a class="btn btn-primary" data-order="glovo" href="#"><img src="assets/img/pin.svg" alt="" width="13" height="20">Order on Glovo</a>
         <a class="btn btn-soft" data-order="whatsapp" href="#"><img src="assets/img/whatsapp.svg" alt="" width="20" height="20">Order on Whatsapp</a>
       </div>
-      <img class="hero-plate-m" src="assets/img/hero-plate.webp" alt="Grilled chicken with fried plantain and pepper sauce" width="1400" height="1400">
     </div>
   </section>
 
@@ -228,31 +237,39 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer" id="contact">
-    <div class="art foot-art" aria-hidden="true">
-      <!-- desktop/tablet composition -->
-      <div class="rows foot-rows" style="--x:-1495.3;--y:-98.3;--w:4599;--h:898">
+    <!-- desktop / tablet composition -->
+    <div class="art foot-art">
+      <div class="rows foot-rows" style="--x:-1495.3;--y:-98.3;--w:4599;--h:898" aria-hidden="true">
         <span class="outline row" style="--rx:165.02;--ry:64.76">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="outline row" style="--rx:-157;--ry:264.76">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="outline row" style="--rx:-641;--ry:464.76">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
         <span class="solid row" style="--rx:1562.22;--ry:72.04">For</span>
         <span class="solid row" style="--rx:1562.22;--ry:272.04">Dodo Lovers</span>
       </div>
-      <!-- mobile composition (same as hero) -->
-      <div class="rows m-rows" style="--x:-126.7;--y:105.7;--w:1720;--h:930">
-        <span class="outline row" style="--rx:-570.25;--ry:0">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
-        <span class="outline row" style="--rx:-892.25;--ry:200">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
-        <span class="outline row" style="--rx:14.75;--ry:400">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
-        <span class="outline row" style="--rx:-570.25;--ry:600">For Dodo Lovers For Dodo Lovers For Dodo Lovers</span>
-      </div>
-      <div class="m-words">
-        <span class="solid word" style="--x:813;--y:211.5">For</span>
-        <span class="solid word" style="--x:910.5;--y:405.5">Dodo</span>
-        <span class="solid word" style="--x:978.5;--y:598.5">Lovers</span>
+      <div class="pill pill-foot" style="--x:962.2;--y:437">
+        <a class="btn btn-primary" data-order="glovo" href="#"><img src="assets/img/pin.svg" alt="" width="13" height="20">Order on Glovo</a>
+        <a class="btn btn-soft" data-order="whatsapp" href="#"><img src="assets/img/whatsapp.svg" alt="" width="20" height="20">Order on Whatsapp</a>
       </div>
     </div>
-    <div class="pill pill-foot" style="--x:962.2;--y:437">
-      <a class="btn btn-primary" data-order="glovo" href="#"><img src="assets/img/pin.svg" alt="" width="13" height="20">Order on Glovo</a>
-      <a class="btn btn-soft" data-order="whatsapp" href="#"><img src="assets/img/whatsapp.svg" alt="" width="20" height="20">Order on Whatsapp</a>
+
+    <!-- phone composition (Figma mobile frame) -->
+    <div class="art-m foot-art-m">
+      <div class="rows" style="--x:-383.59;--y:40.14;--w:942.96;--h:509.75" aria-hidden="true">
+        <span class="outline row" style="--rx:-352.8;--ry:0">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-531.4;--ry:126.1">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-27.4;--ry:252.1">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-352.8;--ry:378.2">For Dodo Lovers For Dodo Lovers</span>
+        <span class="outline row" style="--rx:-102.5;--ry:500.5">For Dodo Lovers For Dodo Lovers</span>
+      </div>
+      <div aria-hidden="true">
+        <span class="solid word" style="--x:104;--y:103.11">For</span>
+        <span class="solid word" style="--x:159.45;--y:224.42">Dodo</span>
+        <span class="solid word" style="--x:199.55;--y:347.99">Lovers</span>
+      </div>
+      <div class="pill pill-m pill-foot" style="--x:201.5;--y:514.04">
+        <a class="btn btn-primary" data-order="glovo" href="#"><img src="assets/img/pin.svg" alt="" width="13" height="20">Order on Glovo</a>
+        <a class="btn btn-soft" data-order="whatsapp" href="#"><img src="assets/img/whatsapp.svg" alt="" width="20" height="20">Order on Whatsapp</a>
+      </div>
     </div>
 
     <div class="footer-inner">

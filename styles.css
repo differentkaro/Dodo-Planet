@@ -15,6 +15,7 @@
   --gutter: 40px;
   --ease: cubic-bezier(.2, .7, .2, 1);
   --band-h: clamp(110px, 16.03vw, 310px);   /* "Menu"/"Stories" band: 209px at 1304, 310px on big screens */
+  --band-mb: calc(62.6px - (var(--band-h) - 209px) * .0455);   /* space under "Stories" before the cards */
 }
 
 @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -51,7 +52,7 @@ button, input { font: inherit; color: inherit; }
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   padding: 32px 44px;
   border: 0; border-radius: 32px;
-  font-weight: 600; font-size: 16px; line-height: 1.25; white-space: nowrap;
+  font-weight: 600; font-size: 16px; line-height: 20px; white-space: nowrap;
   color: var(--brown); cursor: pointer;
   transition: transform .25s var(--ease), background-color .25s var(--ease), box-shadow .25s var(--ease);
   -webkit-tap-highlight-color: transparent;
@@ -60,7 +61,7 @@ button, input { font: inherit; color: inherit; }
 .btn-primary { background: var(--yellow); }
 .btn-soft    { background: var(--yellow-30); }
 .btn:active { transform: translateY(0) scale(.98); }
-.btn-sm { padding: 16px 32px; border-radius: 20px; font-size: 14px; }
+.btn-sm { padding: 16px 32px; border-radius: 20px; font-size: 14px; line-height: 18px; }
 .btn-wide { width: 310px; padding: 32px 24px; }
 .btn-row { display: flex; gap: 16px; padding: 8px; justify-content: center; }
 .btn-row-left { padding: 0; justify-content: flex-start; }
@@ -103,8 +104,9 @@ button, input { font: inherit; color: inherit; }
    ========================================================== */
 .hero, .site-footer { container-type: inline-size; position: relative; }
 /* --u: 1 Figma px (scales down below 1304, stays 1:1 above). --shift centres the art on wide screens. */
-.art, .pill { --u: min(100cqw / 1304, 1px); --shift: max(0px, (100cqw - 1304px) / 2); --ox: 0; --oy: 0; }
-.art { position: relative; }
+.art { --u: min(100cqw / 1304, 1px); --shift: max(0px, (100cqw - 1304px) / 2); --ox: 0; --oy: 0; position: relative; }
+/* phone stage: 1 Figma-mobile px at 393 wide, capped so big phones don't get giant type */
+.art-m { --u: min(100vw / 393, 1.25px); --shift: max(0px, (100vw - 491.25px) / 2); --ox: 0; --oy: 0; position: relative; display: none; }
 
 .outline, .solid {
   font-weight: 700; line-height: 1.2; white-space: nowrap;
@@ -133,7 +135,6 @@ button, input { font: inherit; color: inherit; }
   top: calc((var(--y) - var(--oy)) * var(--u));
   transform: translate(-50%, -50%) rotate(-5deg);
 }
-.headline { font-size: inherit; font-weight: inherit; }
 
 /* tilted order pill */
 .pill {
@@ -149,6 +150,7 @@ button, input { font: inherit; color: inherit; }
   padding: calc(32 * var(--u)) calc(40 * var(--u));
   border-radius: calc(32 * var(--u));
   font-size: max(12px, calc(16 * var(--u)));
+  line-height: max(15px, calc(20 * var(--u)));
 }
 .pill-foot {
   width: auto;
@@ -176,7 +178,6 @@ button, input { font: inherit; color: inherit; }
   transform: rotate(var(--rot, -30deg));
   will-change: transform;
 }
-.hero-mobile { display: none; }
 
 /* ==========================================================
    About
@@ -188,12 +189,13 @@ button, input { font: inherit; color: inherit; }
 }
 .about-inner {
   position: relative; z-index: 1;
-  max-width: max(694px, 62vw); margin: 0 auto;
+  max-width: max(694px, 694px + (100vw - 1304px) * .639);   /* 694 at 1304 (Figma), ~1154 at the 1440 frame, ~1920 at the 1920 frame */
+  margin: 0 auto;
   display: flex; flex-direction: column; align-items: center; gap: 24px;
   text-align: center;
 }
-.about h2 { font-size: 64px; font-weight: 600; line-height: 1.2; color: var(--brown); }
-.about p { font-size: 24px; line-height: 1.2; color: var(--olive); }
+.about h2 { font-size: 64px; font-weight: 600; line-height: 77px; color: var(--brown); }
+.about p { font-size: 24px; line-height: 29px; color: var(--olive); }
 .leaf { position: absolute; top: 165px; height: auto; width: clamp(150px, 21vw, 275px); pointer-events: none; }
 .leaf-l { left: 0; transform-origin: 0 60%; }
 .leaf-r { right: 0; transform-origin: 100% 60%; }
@@ -273,7 +275,7 @@ button, input { font: inherit; color: inherit; }
   position: relative;
   padding: 120px var(--gutter) 80px;
   /* stories cards start 110px below the phone, as in Figma */
-  min-height: calc(170px + var(--phone-w) * 2.1435 - var(--band-h));
+  min-height: calc(190px + var(--phone-w) * 2.1435 - var(--band-h) - var(--band-mb));
 }
 .order-text { position: relative; z-index: 1; width: clamp(0px, 66%, max(808px, 808px + (100vw - 1304px) * .23)); display: flex; flex-direction: column; gap: 40px; }
 .order-head { display: flex; flex-direction: column; gap: 16px; line-height: 1.2; }
@@ -293,7 +295,7 @@ button, input { font: inherit; color: inherit; }
    Stories
    ========================================================== */
 .stories { position: relative; z-index: 1; }
-.stories > .band { margin-bottom: 20px; }
+.stories > .band { margin-bottom: var(--band-mb); }
 .story-track {
   --pad: var(--gutter);
   display: flex; gap: 24px;
@@ -335,8 +337,7 @@ button, input { font: inherit; color: inherit; }
   margin-top: 24px;
   background: linear-gradient(180deg, rgba(255, 199, 0, 0) 29.73%, rgba(255, 199, 0, .5) 100%);
 }
-.foot-art { height: calc(492.2 * var(--u)); }
-.m-rows, .m-words { display: none; }
+.foot-art { height: calc(498 * var(--u)); }
 
 .footer-inner {
   position: relative; z-index: 2;
@@ -355,8 +356,8 @@ button, input { font: inherit; color: inherit; }
 .fc-row > .logo { margin-right: 80px; }
 .fc-cols { flex: 1; display: flex; justify-content: center; gap: 16px; }
 .fc-col { width: 288px; display: flex; flex-direction: column; gap: 24px; font-weight: 500; line-height: 1.4; }
-.fc-label { font-size: 12px; letter-spacing: .48px; color: var(--olive); opacity: .6; }
-.fc-col ul { display: flex; flex-direction: column; font-size: 16px; }
+.fc-label { font-size: 12px; line-height: 17px; letter-spacing: .48px; color: var(--olive); opacity: .6; }
+.fc-col ul { display: flex; flex-direction: column; font-size: 16px; line-height: 22px; }
 .fc-col li a { display: inline-block; padding: 8px 0; }
 .fc-col ul { margin-block: -8px; }
 .fc-col a { transition: color .2s; }
@@ -364,7 +365,7 @@ button, input { font: inherit; color: inherit; }
 .fc-contact {
   width: 200px; flex: none;
   display: flex; flex-direction: column; align-items: flex-end; gap: 0;
-  font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--ink);
+  font-size: 12px; font-weight: 600; line-height: 16px; color: var(--ink);
 }
 .fc-contact .btn { width: 190px; margin-bottom: 12px; }
 .fc-contact a:not(.btn) { padding: 4px 0; }
@@ -385,16 +386,16 @@ button, input { font: inherit; color: inherit; }
 .field {
   flex: 1 1 521px;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 16px 24px 16px 16px;
+  padding: 14px 22px 14px 14px;   /* 16/24/16/16 in Figma, minus the 2px border that Figma draws inside */
   border: 2px solid rgba(79, 44, 0, .1); border-radius: 16px;
   cursor: text; transition: border-color .2s;
 }
 .field:focus-within { border-color: var(--yellow); }
 .field-text { flex: 1; display: flex; flex-direction: column; gap: 4px; line-height: 1.4; }
-.field-label { font-size: 14px; font-weight: 500; letter-spacing: .56px; }
+.field-label { font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: .56px; }
 .field input {
   width: 100%; padding: 0; border: 0; background: none; outline: none;
-  font-size: 18px; color: var(--brown);
+  font-size: 18px; line-height: 25px; color: var(--brown);
 }
 .field input::placeholder { color: var(--olive); }
 .field button { display: grid; padding: 6px; margin: -6px; border: 0; background: none; cursor: pointer; transition: transform .2s var(--ease); }
@@ -432,8 +433,8 @@ button, input { font: inherit; color: inherit; }
 @media (max-width: 1199px) {
   .about { padding-block: 140px 120px; }
   .about-inner { max-width: 560px; }
-  .about h2 { font-size: 48px; }
-  .about p { font-size: 20px; }
+  .about h2 { font-size: 48px; line-height: 1.2; }
+  .about p { font-size: 20px; line-height: 1.2; }
   .about .btn-row { flex-direction: column; width: 100%; max-width: 480px; }
   .about .btn-wide { width: 100%; }
   .fc-row > .logo { margin-right: 0; }
@@ -447,7 +448,7 @@ button, input { font: inherit; color: inherit; }
   .nav-cta { gap: 8px; }
   .nav-cta .btn-sm { padding: 14px 18px; }
   .pill { flex-direction: column; width: auto; background: none; }
-  .pill .btn { padding: 22px 48px; font-size: 14px; border-radius: 28px; }
+  .pill .btn { padding: 22px 48px; font-size: 14px; line-height: 18px; border-radius: 28px; }
   .hero-art { height: calc(1030 * var(--u)); }
   .hero-art > .pill { top: calc(860 * var(--u)); }
   .foot-art { height: calc(600 * var(--u)); }
@@ -466,83 +467,132 @@ button, input { font: inherit; color: inherit; }
 }
 
 /* ==========================================================
-   Mobile  (≤ 767px)
+   Mobile  (≤ 767px) — built from the Figma mobile frame (393 wide).
+   --mu = 1 Figma-mobile px; it scales with the screen and stops growing at 491px.
    ========================================================== */
 @media (max-width: 767px) {
-  :root { --gutter: 12px; }
+  :root { --gutter: 12px; --mu: calc(min(100vw, 491.25px) / 393); }
   .hide-sm { display: none !important; }
-  .site-header { left: 16px; right: 16px; }
-  .nav-links a { padding: 13px 8px; }
+  .site-header { left: 12px; right: 12px; }
   .nav-links { flex: 1; justify-content: space-between; }
+  .nav-links a { padding: 13px 8px; }          /* bigger tap area, same text position */
+  .brand .logo { width: 80px; height: 80px; }
+  .btn img { height: 18px; width: auto; }
 
-  /* hero: same composition, zoomed so "For / Dodo / Lovers" fills the screen */
-  .hero-art, .foot-art { height: calc(940 * var(--u)); }
-  .hero-art, .foot-art { --u: calc(100cqw / 737); --ox: 630; --oy: -170; }
-  .hero-art > .pill, .hero-plate-clip { display: none; }
+  /* swap the desktop art for the phone composition */
+  .hero-art, .foot-art { display: none; }
+  .art-m { display: block; }
+  .art-m .outline, .art-m .solid { font-size: calc(100 * var(--u)); }
+  .art-m .outline { -webkit-text-stroke-width: max(1.25px, calc(2.22 * var(--u))); }
 
-  .hero-mobile { display: block; position: relative; z-index: 2; }
-  .stack-tilt { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; transform: rotate(-4deg); }
-  .stack-tilt .btn { padding: 26px 24px; font-size: 14px; }
-  .stack-tilt .btn-soft { background: #FFEFAE; margin-inline: 8px -6px; }
-  .hero-plate-m { width: min(125%, 620px); max-width: none; margin: -10px 0 0 -30%; transform: rotate(var(--rot, -30deg)); }
-
-  .about { margin-top: 0; padding: 40px var(--gutter) 0; display: flex; flex-wrap: wrap; justify-content: space-between; }
-  .about-inner { order: -1; width: 100%; gap: 20px; }
-  .about h2 { font-size: 36px; }
-  .about p { font-size: 14px; }
-  .about .btn-row { padding: 8px 0; gap: 12px; max-width: none; }
-  .about .btn-wide, .order .btn-wide { padding: 24px; }
-  .leaf { position: static; width: 44%; height: 300px; object-fit: cover; margin-top: 40px; }
-  .leaf-l { margin-left: calc(var(--gutter) * -1); object-position: right bottom; }
-  .leaf-r { margin-right: calc(var(--gutter) * -1); object-position: left bottom; }
-
-  .band { height: 200px; }
-  .band .outline, .band .solid { font-size: 94px; }
-  .band .outline { -webkit-text-stroke: 2px var(--yellow); }
-
-  .menu-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 268px), 1fr)); gap: 16px; margin-top: 8px; }
-  .dish { padding: 32px 24px; gap: 32px; border-radius: 32px; }
-  .dish-img { margin: 0 12px; }
-  .dish h3 { font-size: 28px; }
-  .dish p { font-size: 14px; }
-  .price strong { font-size: 34px; }
-
-  .order { padding-top: 80px; display: flex; flex-direction: column; }
-  .order-text { width: 100%; gap: 32px; }
-  .order h2 { font-size: 28px; }
-  .order-head p, .order-opt p { font-size: 14px; }
-  .order { min-height: 0; padding-bottom: 0; }
-  .phone { position: static; width: min(82%, 380px); margin: 40px auto 0; }
-
-  .stories { margin-top: -60px; }
-  .story { flex-basis: min(89vw, 420px); aspect-ratio: auto; min-height: 560px; padding: 24px; gap: 24px; border-radius: 32px; }
-  .story blockquote { font-size: 14px; }
-  .story figcaption span { font-size: 12px; }
-
-  /* footer band: mobile uses the hero composition */
-  .foot-rows { display: none; }
-  .m-rows, .m-words { display: block; }
-  .pill-foot {
-    position: relative; left: auto; right: auto; top: auto; z-index: 3;
-    flex-direction: column;
-    transform: rotate(-4deg);
-    width: auto; margin: 0 16px; padding: 0; gap: 12px;
-    background: none;
+  .hero-art-m { height: calc(1222 * var(--u)); }
+  .plate-m-clip {
+    position: absolute; left: 0; right: 0;
+    top: calc(703 * var(--u)); height: calc(519 * var(--u));
+    overflow: hidden; pointer-events: none;
   }
-  .pill-foot .btn { padding: 26px 24px; font-size: 14px; border-radius: 32px; }
-  .pill-foot .btn-soft { background: #FFEFAE; }
+  .plate-m {
+    position: absolute; max-width: none;
+    width: calc(630.9 * var(--u)); height: calc(630.9 * var(--u));
+    left: calc(-113.05 * var(--u) + var(--shift)); top: calc(-42.95 * var(--u));
+    transform: rotate(var(--rot, -30deg));
+    will-change: transform;
+  }
 
-  .footer-inner { padding-inline: var(--gutter); gap: 32px; }
-  .footer-card { padding: 24px; gap: 40px; background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.2)); }
-  .fc-row { flex-direction: column; gap: 32px; }
-  .fc-cols { flex-direction: column; gap: 32px; width: 100%; }
-  .fc-contact { width: 100%; align-items: flex-start; }
-  .fc-contact .btn { width: 100%; }
-  .fc-bottom { gap: 32px; align-items: flex-start; }
+  /* tilted stacked order buttons (hero + footer) */
+  .pill-m {
+    left: calc((var(--x) - var(--ox)) * var(--u) + var(--shift)); right: auto;
+    top: calc((var(--y) - var(--oy)) * var(--u));
+    transform: translate(-50%, -50%) rotate(-5deg);
+    flex-direction: column;
+    width: calc(353.26 * var(--u));
+    gap: calc(16 * var(--u));
+    padding: calc(8 * var(--u));
+    border-radius: calc(40 * var(--u));
+  }
+  .hero-art-m .pill-m { background: var(--cream); }
+  .pill-m .btn img { height: calc(18 * var(--u)); }
+  .pill-m .btn {
+    flex: none;
+    padding: calc(32 * var(--u)) 0;
+    border-radius: calc(32 * var(--u));
+    font-size: max(12px, calc(14 * var(--u)));
+    line-height: calc(18 * var(--u));
+  }
+
+  /* about */
+  .about { margin-top: 0; padding: 80px var(--gutter) calc(80px + 332 * var(--mu)); }
+  .about-inner { max-width: 368px; gap: 24px; }
+  .about h2 { font-size: 40px; line-height: 48px; }
+  .about p { font-size: 16px; line-height: 19px; }
+  .about .btn-row { flex-direction: column; width: 100%; max-width: none; padding: 0; gap: 16px; }
+  .about .btn-wide, .order .btn-wide { width: 100%; padding: 32px 24px; font-size: 14px; line-height: 18px; }
+  .leaf { top: auto; bottom: calc(40px - 10.5 * var(--mu)); }
+  .leaf-l { left: calc(-10.3 * var(--mu)); width: calc(182.9 * var(--mu)); }
+  .leaf-r { right: calc(-10.3 * var(--mu)); width: calc(180.2 * var(--mu)); }
+
+  /* "Menu" / "Stories" bands */
+  .band { height: calc(211 * var(--mu)); }
+  .band .outline, .band .solid { font-size: calc(100 * var(--mu)); }
+  .band .outline { -webkit-text-stroke-width: max(1.25px, calc(2.22 * var(--mu))); }
+  .band .band-row  { transform: translate(calc(-50% + var(--rdx) * var(--mu)), calc(-50% + var(--rdy) * var(--mu))) rotate(-5deg); }
+  .band .band-word { transform: translate(calc(-50% + var(--wdx) * var(--mu)), calc(-50% + var(--wdy) * var(--mu))) rotate(-5deg); }
+  .menu .band    { --rdx: -5.8; --rdy: -10.15; --wdx: -1.15; --wdy: -4.71; }
+  .stories .band { --rdx: .3;   --rdy: -4.67;  --wdx: 4.6;   --wdy: .42; }
+
+  /* menu cards */
+  .menu-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 268px), 1fr)); gap: 16px; margin-top: 0; }
+  .dish { padding: 40px; gap: 40px; border-radius: 40px; min-height: 0; }
+  .dish-body { gap: 39.2px; }
+  .dish h3 { font-size: 28px; line-height: 34px; }
+  .dish p { font-size: 16px; }
+  .price strong { font-size: 32px; }
+
+  /* how to order */
+  .order { padding: 80px var(--gutter) 0; min-height: 0; display: flex; flex-direction: column; }
+  .order-text { width: 100%; gap: 40px; }
+  .order h2 { font-size: 28px; line-height: 34px; }
+  .order-head p { font-size: 16px; line-height: 19px; }
+  .order-opt p { font-size: 16px; }
+  .order-opt > img { width: auto; height: 36px; align-self: flex-start; }
+  .order-text .btn-row { flex-direction: column; gap: 16px; }
+  /* the photo's hand is cropped on its right side: keep that edge on the screen edge */
+  .phone {
+    position: static;
+    width: calc(381.15 * var(--mu)); height: calc(818 * var(--mu)); max-width: none;
+    object-fit: cover; object-position: left top;
+    margin: 40px calc(var(--gutter) * -1) 0 auto;
+  }
+
+  /* stories */
+  .stories { margin-top: calc(-106 * var(--mu)); }
+  .stories > .band { margin-bottom: 0; }
+  .story-track { gap: 16px; }
+  .story { flex-basis: calc(350 * var(--mu)); aspect-ratio: 350 / 580; padding: 28px; gap: 28px; }
+  .story figcaption span { font-size: 12px; }
+  .story-nav { margin-top: 40px; }
+  .round-btn img { width: 40px; height: 40px; }
+
+  /* footer */
+  .site-footer { margin-top: 6px; }
+  .foot-art-m { height: calc(631.8 * var(--u)); }
+  .footer-inner { padding: 12px var(--gutter) 92px; gap: 40px; }
+  .footer-card { padding: 24px; gap: 64px; }
+  .fc-row { flex-direction: column; gap: 64px; }
+  .fc-cols { flex-direction: column; gap: 40px; width: 100%; }
+  .fc-contact { width: 100%; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 18px; margin-bottom: -4px; }
+  .fc-contact .btn { width: 100%; padding: 24px; margin-bottom: 4px; }
+  .fc-bottom { gap: 40px; align-items: flex-start; }
   .socials { grid-template-columns: repeat(4, 56px); justify-content: space-between; width: 100%; }
   .subs { flex-direction: column; gap: 24px; }
-  .subs-title { flex: none; max-width: none; align-self: auto; font-size: 24px; }
+  .subs-title { flex: none; max-width: none; align-self: auto; font-size: 24px; line-height: 29px; }
   .field { flex: none; width: 100%; }
-  .field input { font-size: 16px; }
-  .legal { flex-direction: column-reverse; gap: 16px; font-size: 12px; }
+  .legal { flex-direction: column-reverse; gap: 16px; }
+}
+
+/* two cards per row on big phones: slightly tighter cards */
+@media (min-width: 576px) and (max-width: 767px) {
+  .dish { padding: 28px; gap: 32px; }
+  .dish h3 { font-size: 24px; }
+  .price strong { font-size: 32px; }
 }
