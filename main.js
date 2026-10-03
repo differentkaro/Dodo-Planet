@@ -13,6 +13,12 @@
     a.rel = 'noopener';
   });
 
+  // ---- Placeholder links (no page yet) shouldn't jump to the top of the page
+  document.querySelectorAll('a[href="#"]:not([data-order])').forEach((a) => {
+    a.setAttribute('aria-disabled', 'true');
+    a.addEventListener('click', (e) => e.preventDefault());
+  });
+
   // ---- "Send us a message" form → opens WhatsApp with the typed message
   const form = document.getElementById('message-form');
   form?.addEventListener('submit', (e) => {
@@ -31,8 +37,10 @@
       const card = track.querySelector('.story');
       return card ? card.getBoundingClientRect().width + 24 : track.clientWidth;
     };
+    const nav = prev.parentElement;
     const update = () => {
       const max = track.scrollWidth - track.clientWidth - 2;
+      nav.hidden = max <= 0; // every story fits on screen: arrows aren't needed
       prev.disabled = track.scrollLeft <= 2;
       next.disabled = track.scrollLeft >= max;
     };
