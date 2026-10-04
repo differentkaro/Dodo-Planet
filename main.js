@@ -15,7 +15,7 @@
 
   // ---- Google Analytics: paste your Measurement ID (looks like 'G-XXXXXXXXXX') to switch it on.
   //      It only loads after the visitor taps "Okay" on the small cookie notice.
-  const GA_ID = '';
+  const GA_ID = 'G-1064VXYMYD';
   const CONSENT_KEY = 'dp-analytics';
   const store = {
     get() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } },
