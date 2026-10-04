@@ -13,6 +13,49 @@
     a.rel = 'noopener';
   });
 
+  // ---- Google Analytics: paste your Measurement ID (looks like 'G-XXXXXXXXXX') to switch it on.
+  //      It only loads after the visitor taps "Okay" on the small cookie notice.
+  const GA_ID = '';
+  const CONSENT_KEY = 'dp-analytics';
+  const store = {
+    get() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) { /* private mode */ } },
+  };
+  const loadGA = () => {
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.append(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID);
+  };
+  if (GA_ID) {
+    const choice = store.get();
+    if (choice === 'yes') loadGA();
+    else if (choice !== 'no') {
+      const box = document.createElement('div');
+      box.className = 'consent';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-label', 'Cookie notice');
+      box.innerHTML = '<p>We use Google Analytics cookies to see which pages people enjoy, so we can make the site better. <a href="/privacy.html">Learn more</a></p><div><button class="btn btn-primary" data-c="yes">Okay</button><button class="btn btn-soft" data-c="no">No thanks</button></div>';
+      box.addEventListener('click', (e) => {
+        const c = e.target.closest('[data-c]')?.dataset.c;
+        if (!c) return;
+        store.set(c);
+        if (c === 'yes') loadGA();
+        box.remove();
+      });
+      document.body.append(box);
+    }
+  }
+  document.querySelectorAll('[data-reset-consent]').forEach((b) => b.addEventListener('click', (e) => {
+    e.preventDefault();
+    try { localStorage.removeItem(CONSENT_KEY); } catch (err) { /* ignore */ }
+    location.reload();
+  }));
+
   // ---- Placeholder links (no page yet) shouldn't jump to the top of the page
   document.querySelectorAll('a[href="#"]:not([data-order])').forEach((a) => {
     a.setAttribute('aria-disabled', 'true');

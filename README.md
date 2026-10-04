@@ -1,13 +1,17 @@
 # Dodo Planet — website
 
-Static, dependency-free site built from the Figma file *Dodo Planet Website* (Desktop 1280, 1440, Tablet and Mobile frames).
+Static, dependency-free site for dodoplanet.ng, built from the Figma file *Dodo Planet Website*.
 
-- `index.html` — homepage; `menu.html`, `our-story.html`, `privacy.html` — other pages
-- `styles.css` — design tokens (colours, type) at the top, then each section; tablet/mobile rules at the bottom
-- `main.js` — order links, stories slider, scroll animations
-- `assets/` — optimised images (WebP/SVG) and the self-hosted Outfit font
+## Pages
+- `index.html` — homepage (hero, Lekki ribbon, menu, how to order, stories, FAQ)
+- `menu.html`, `our-story.html`, `privacy.html`, `blog.html`, `blog/*.html`, `404.html`
+- `sitemap.xml`, `robots.txt`, `llms.txt` — for search engines and AI assistants
 
-**Edit order links:** change `WHATSAPP_NUMBER` and `GLOVO_URL` at the top of `main.js`.
+## Editing
+- Menu items, FAQ and blog posts: `tools/content.py`
+- Colours, type and layout: `styles.css` (design tokens at the top)
+- Order links, Google Analytics ID: top of `main.js` (`WHATSAPP_NUMBER`, `GLOVO_URL`, `GA_ID`)
+- After editing, run `python3 tools/site.py` to rebuild every page, the minified CSS, sitemap and llms.txt.
 
-**Run locally:** open `index.html`, or `python3 -m http.server` and visit http://localhost:8000.
-Deploys as-is to any static host (Netlify, Vercel, GitHub Pages).
+## Run locally
+`python3 -m http.server` in this folder, then open http://localhost:8000 (paths are root-absolute, so open via a server, not as a file).
