@@ -20,6 +20,13 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# One official address: send the temporary Netlify address to the real domain
+[[redirects]]
+  from = "https://dodo-planet.netlify.app/*"
+  to = "https://dodoplanet.ng/:splat"
+  status = 301
+  force = true
+
 # Build tools and notes are not part of the website
 [[redirects]]
   from = "/tools/*"
