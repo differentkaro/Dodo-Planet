@@ -2,7 +2,7 @@
 
 Static, dependency-free site built from the Figma file *Dodo Planet Website* (Desktop 1280, 1440, Tablet and Mobile frames).
 
-- `index.html` — all page content
+- `index.html` — homepage; `menu.html`, `our-story.html`, `privacy.html` — other pages
 - `styles.css` — design tokens (colours, type) at the top, then each section; tablet/mobile rules at the bottom
 - `main.js` — order links, stories slider, scroll animations
 - `assets/` — optimised images (WebP/SVG) and the self-hosted Outfit font

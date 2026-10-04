@@ -54,6 +54,14 @@
     update();
   }
 
+  // ---- Menu page filter chips (All / New / Classics)
+  const chips = document.querySelectorAll('.chip[data-filter]');
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const f = chip.dataset.filter;
+    chips.forEach((c) => { const on = c === chip; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', on); });
+    document.querySelectorAll('.menu-grid .dish').forEach((d) => { d.hidden = f !== 'all' && d.dataset.cat !== f; });
+  }));
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---- Reveal on scroll (staggered per row of the menu)
