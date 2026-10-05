@@ -15,7 +15,7 @@
 
   // ---- Google Analytics: paste your Measurement ID (looks like 'G-XXXXXXXXXX') to switch it on.
   //      It only loads after the visitor taps "Okay" on the small cookie notice.
-  const GA_ID = '';
+  const GA_ID = 'G-1064VXYMYD';
   const CONSENT_KEY = 'dp-analytics';
   const store = {
     get() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } },
@@ -124,6 +124,19 @@
     revealEls.forEach((el) => io.observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add('in'));
+  }
+
+  // ---- Dodo Dash mini game under the footer (game.js): only downloaded when the footer gets close
+  const siteFooter = document.querySelector('.site-footer');
+  if (siteFooter && 'IntersectionObserver' in window) {
+    const gameIO = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      gameIO.disconnect();
+      const s = document.createElement('script');
+      s.src = '/game.js';
+      document.body.append(s);
+    }, { rootMargin: '0px 0px 800px 0px' });
+    gameIO.observe(siteFooter);
   }
 
   // ---- Hero plate turns gently as you scroll (GPU transform only)
