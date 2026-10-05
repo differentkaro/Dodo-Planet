@@ -55,6 +55,7 @@ HEADER = src[src.index('<!-- ============ HEADER ============ -->'):src.index('<
 HEADER = HEADER.replace(' aria-current="page"', '')
 FOOTER = src[src.index('  <!-- ============ FOOTER ============ -->'):src.index('</main>')]
 FOOTER = FOOTER.replace('<li><a href="#">Blog</a></li>', '<li><a href="/blog.html">Blog</a></li>')
+FOOTER = re.sub(r'© \d{4}', f'© {date.today().year}', FOOTER)   # copyright year stays current on every rebuild
 HOME_BODY = between(src, '<main id="top">\n', '  <!-- ============ FOOTER ============ -->')
 TAIL = '</main>\n\n<script src="/main.js" defer></script>\n</body>\n</html>\n'
 
