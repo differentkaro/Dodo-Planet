@@ -11,6 +11,7 @@ Static, dependency-free site for dodoplanet.ng, built from the Figma file *Dodo 
 - Menu items, FAQ and blog posts: `tools/content.py`
 - Colours, type and layout: `styles.css` (design tokens at the top)
 - Order links, Google Analytics ID: top of `main.js` (`WHATSAPP_NUMBER`, `GLOVO_URL`, `GA_ID`)
+- Dodo Dash mini game under the footer: `game.js` (its styles and markup live in that file too). `main.js` only downloads it when a visitor scrolls near the footer, so it adds nothing to page load. Best scores are kept in the visitor's browser (`dp-dash-best`).
 - After editing, run `python3 tools/site.py` to rebuild every page, the minified CSS, sitemap and llms.txt.
 
 ## Run locally
