@@ -28,9 +28,6 @@
 .dash-ui.is-cool .btn{pointer-events:none}
 .dash-ui.is-off{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility 0s .2s}
 .dash-go{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.dash-go i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(48,169,98,.5)}
-@media (prefers-reduced-motion:no-preference){.dash-go i{animation:dash-ping 1.8s ease-out infinite}}
-@keyframes dash-ping{70%,100%{box-shadow:0 0 0 10px rgba(48,169,98,0)}}
 .dash-msg{font-size:22px;font-weight:700;line-height:1.2}
 .dash-note{font-size:14px;line-height:1.4;color:var(--olive)}
 .dash-note b{color:var(--brown);font-size:18px}
@@ -77,7 +74,7 @@
       <div class="dash-ui" data-ui></div>
     </div>
     <p class="dash-hint" id="dash-hint">
-      <span class="dash-go"><i></i><span class="dash-keys"><span class="dash-k">Click</span> or <span class="dash-k">Space</span> to start</span><span class="dash-touch"><span class="dash-k">Tap</span> to start</span></span>
+      <span class="dash-go"><span class="dash-keys"><span class="dash-k">Click</span> or <span class="dash-k">Space</span> to start</span><span class="dash-touch"><span class="dash-k">Tap</span> to start</span></span>
       <span class="dash-play"><span class="dash-keys"><span class="dash-k">Space</span> or <span class="dash-k">↑</span> to jump, hold for a bigger jump. <span class="dash-k">P</span> pauses.</span>
       <span class="dash-touch">Tap to jump, hold for a bigger jump.</span></span>
     </p>
