@@ -101,7 +101,7 @@ def head(path, title, desc, og_img, extra_ld='', preload_hero=False, robots=None
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-{canon}{rob}  <meta name="theme-color" content="#FFFBEF">
+{canon}{rob}  <meta name="theme-color" content="#FFC700">
   <meta property="og:site_name" content="Dodo Planet">
   <meta property="og:locale" content="en_NG">
   <meta property="og:type" content="{og_type}">
