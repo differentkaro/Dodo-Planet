@@ -201,11 +201,33 @@ button, input { font: inherit; color: inherit; }
 .leaf { position: absolute; top: 165px; height: auto; width: clamp(150px, 21vw, 275px); pointer-events: none; }
 .leaf-l { left: 0; transform-origin: 0 60%; }
 .leaf-r { right: 0; transform-origin: 100% 60%; }
+/* leaves bob up and down like a breeze is passing; the two sides are out of step so it feels natural */
+.leaf-l { --dir: 1; }
+.leaf-r { --dir: -1; }
 @media (prefers-reduced-motion: no-preference) {
-  .leaf-l { animation: sway 7s ease-in-out infinite alternate; }
-  .leaf-r { animation: sway 7s ease-in-out infinite alternate-reverse; }
+  .leaf { will-change: transform; animation: breeze 6.4s ease-in-out infinite; }
+  .leaf-r { animation-duration: 7.6s; animation-delay: -2.3s; }
 }
-@keyframes sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+@keyframes breeze {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  18% { transform: translateY(-7px) rotate(calc(-1.6deg * var(--dir))); }
+  32% { transform: translateY(2px) rotate(calc(.7deg * var(--dir))); }
+  52% { transform: translateY(-11px) rotate(calc(-2.4deg * var(--dir))); }
+  66% { transform: translateY(1px) rotate(calc(.5deg * var(--dir))); }
+  82% { transform: translateY(-4px) rotate(calc(-1deg * var(--dir))); }
+}
+
+/* "For Dodo Lovers" outline letters flicker like a fluorescent tube (main.js picks the letters and the moments) */
+.flk { animation: flk-a .9s step-end both; animation-delay: var(--fd, 0s); }
+.flk.flk-b { animation-name: flk-b; animation-duration: 1.2s; }
+@keyframes flk-a {
+  0% { opacity: 1; } 6% { opacity: .12; } 10% { opacity: 1; } 18% { opacity: .2; } 22% { opacity: .85; }
+  34% { opacity: .06; } 58% { opacity: 1; } 64% { opacity: .3; } 68%, 100% { opacity: 1; }
+}
+@keyframes flk-b {
+  0% { opacity: 1; } 4% { opacity: .05; } 30% { opacity: .9; } 34% { opacity: .1; } 40% { opacity: 1; }
+  72% { opacity: .15; } 76%, 100% { opacity: 1; }
+}
 
 /* ==========================================================
    Section bands ("Menu Menu Menu", "Stories Stories")

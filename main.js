@@ -126,6 +126,52 @@
     revealEls.forEach((el) => el.classList.add('in'));
   }
 
+  // ---- "For Dodo Lovers" outline letters flicker like a fluorescent bulb:
+  //      a burst when the page loads or a block scrolls into view, then a few letters now and then
+  const glowRows = [...document.querySelectorAll('.rows')].filter((r) => r.querySelector('.outline.row'));
+  if (glowRows.length && 'IntersectionObserver' in window && !reduceMotion) {
+    const onScreen = new Set();
+    const letters = (box) => {
+      if (!box.flk) {
+        // wrap each letter in its own span the first time this block is needed
+        box.querySelectorAll('.outline.row').forEach((row) => {
+          row.innerHTML = row.textContent.replace(/\S/g, '<span>$&</span>');
+        });
+        box.flk = [...box.querySelectorAll('.outline.row span')];
+      }
+      return box.flk;
+    };
+    const flicker = (box, share) => {
+      const all = letters(box);
+      const n = Math.max(2, Math.round(all.length * share));
+      for (let i = 0; i < n; i++) {
+        const el = all[(Math.random() * all.length) | 0];
+        if (el.classList.contains('flk')) continue;
+        el.style.setProperty('--fd', `${(Math.random() * 0.7).toFixed(2)}s`);
+        el.classList.toggle('flk-b', Math.random() < 0.5);
+        el.classList.add('flk');
+        el.addEventListener('animationend', () => el.classList.remove('flk', 'flk-b'), { once: true });
+      }
+    };
+    const glowIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        if (!onScreen.has(e.target)) flicker(e.target, 0.22);
+        onScreen.add(e.target);
+      } else onScreen.delete(e.target);
+    }), { threshold: 0.15 });
+    glowRows.forEach((r) => glowIO.observe(r));
+    const nowAndThen = () => {
+      setTimeout(() => {
+        if (!document.hidden && onScreen.size) {
+          const list = [...onScreen];
+          flicker(list[(Math.random() * list.length) | 0], 0.03);
+        }
+        nowAndThen();
+      }, 2500 + Math.random() * 5000);
+    };
+    nowAndThen();
+  }
+
   // ---- Dodo Dash mini game under the footer (game.js): only downloaded when the footer gets close
   const siteFooter = document.querySelector('.site-footer');
   if (siteFooter && 'IntersectionObserver' in window) {
