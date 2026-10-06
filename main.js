@@ -126,17 +126,17 @@
     revealEls.forEach((el) => el.classList.add('in'));
   }
 
-  // ---- Dodo Dash mini game under the footer (game.js): only downloaded when the footer gets close
-  const siteFooter = document.querySelector('.site-footer');
-  if (siteFooter && 'IntersectionObserver' in window) {
-    const gameIO = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      gameIO.disconnect();
+  // ---- Dodo Dash mini game under the footer (game.js): downloaded once the page has fully loaded,
+  //      in the browser's next quiet moment, so it never competes with the page itself
+  if (document.querySelector('.site-footer')) {
+    const loadGame = () => {
       const s = document.createElement('script');
       s.src = '/game.js';
       document.body.append(s);
-    }, { rootMargin: '0px 0px 800px 0px' });
-    gameIO.observe(siteFooter);
+    };
+    const whenIdle = () => ('requestIdleCallback' in window ? requestIdleCallback(loadGame, { timeout: 2000 }) : setTimeout(loadGame, 200));
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
   }
 
   // ---- Hero plate turns gently as you scroll (GPU transform only)
