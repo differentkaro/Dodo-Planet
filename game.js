@@ -16,42 +16,42 @@
 
   // ---------------------------------------------------------------- styles
   const css = `
-.dash{background:rgba(255,199,0,.5);padding:0 var(--gutter) 40px}
+.dash{position:relative;background:rgba(255,199,0,.5);padding:0 var(--gutter) 40px}
 .site-footer:has(+ .dash) .footer-inner{padding-bottom:32px}
-.dash-card{padding:32px 40px;border-radius:16px;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)),linear-gradient(180deg,#FFF4CE 0%,#FFE691 100%)}
-.dash-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
-.dash-titles{display:flex;flex-direction:column;gap:8px}
-.dash h2{font-size:32px;font-weight:700;line-height:1.2}
-.dash h2 span{color:var(--green)}
-.dash-sub{font-size:16px;line-height:1.5;color:var(--olive);max-width:560px}
-.dash-scores{display:flex;gap:12px;flex:none}
-.dash-pill{display:flex;flex-direction:column;align-items:center;min-width:96px;padding:10px 18px;border-radius:16px;background:rgba(79,44,0,.05)}
-.dash-pill span{font-size:12px;line-height:17px;letter-spacing:.48px;color:var(--olive)}
-.dash-pill b{display:inline-block;font-size:24px;line-height:1.2;font-weight:700;font-variant-numeric:tabular-nums}
-.dash-stage{position:relative;margin-top:24px;height:clamp(200px,17vw,250px);border:2px solid rgba(79,44,0,.1);border-radius:16px;background:linear-gradient(180deg,#FFFDF6 0%,var(--cream) 100%);overflow:hidden;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.dash-stage{position:relative;height:clamp(200px,17vw,250px);overflow:hidden;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.dash-stage:focus-visible{outline:none}
+.dash:has(.dash-stage:focus-visible) .dash-go{outline:3px solid var(--brown);outline-offset:4px;border-radius:8px}
 .dash-stage.is-playing{cursor:default;touch-action:none}
 .dash-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.dash-ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px;text-align:center;background:rgba(255,251,239,.74);transition:opacity .25s var(--ease)}
+.dash-ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px;text-align:center;background:radial-gradient(ellipse 46% 62% at 50% 48%,rgba(255,225,120,.94) 0,rgba(255,225,120,.82) 55%,rgba(255,225,120,0) 100%);transition:opacity .25s var(--ease)}
+.dash-ui.is-idle{background:none;justify-content:flex-start;padding-top:22px}
 .dash-ui.is-cool .btn{pointer-events:none}
 .dash-ui.is-off{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility 0s .2s}
+.dash-go{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .dash-msg{font-size:22px;font-weight:700;line-height:1.2}
 .dash-note{font-size:14px;line-height:1.4;color:var(--olive)}
 .dash-note b{color:var(--brown);font-size:18px}
 .dash-new{display:inline-block;margin-left:6px;padding:2px 10px;border-radius:1000px;background:var(--green);color:#fff;font-size:12px;font-weight:600;vertical-align:2px}
 .dash-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .dash-actions .btn{padding:14px 26px;border-radius:18px;font-size:14px}
-.dash-hint{margin-top:12px;font-size:12px;line-height:17px;color:var(--olive)}
+/* score and controls stay hidden until the first run starts */
+.dash-scores{position:absolute;z-index:2;top:12px;right:5%;display:flex;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s .3s}
+.dash-pill{display:flex;align-items:baseline;gap:8px;padding:6px 14px;border-radius:100px;background:rgba(79,44,0,.06)}
+.dash-pill span{font-size:12px;line-height:17px;letter-spacing:.48px;color:var(--olive)}
+.dash-pill b{font-size:18px;line-height:1.2;font-weight:700;font-variant-numeric:tabular-nums}
+.dash-hint{margin-top:8px;font-size:12px;line-height:17px;color:var(--olive);text-align:center}
+.dash.is-on .dash-scores{opacity:1;visibility:visible;transition:opacity .3s var(--ease)}
+/* before the first run the line under the road says how to start; after, how to play */
+.dash-play,.dash.is-on .dash-go{display:none}
+.dash.is-on .dash-play{display:inline}
 .dash-k{display:inline-block;min-width:22px;padding:0 6px;border-radius:6px;background:rgba(79,44,0,.07);color:var(--brown);font-weight:600;text-align:center}
 .dash-touch{display:none}
 @media (pointer:coarse){.dash-touch{display:inline}.dash-keys{display:none}}
 @media (max-width:767px){
-.dash-card{padding:24px}
-.dash-head{flex-direction:column;align-items:stretch;gap:16px}
-.dash h2{font-size:24px;line-height:29px}
-.dash-sub{font-size:14px}
-.dash-pill{flex:1;flex-direction:row;justify-content:space-between;align-items:baseline;padding:10px 16px}
-.dash-pill b{font-size:20px}
-.dash-stage{margin-top:16px;height:auto;aspect-ratio:520/270}
+.dash-stage{height:auto;aspect-ratio:520/270;-webkit-mask-image:none;mask-image:none}
+.dash-scores{top:8px;right:8px;gap:6px}
+.dash-pill{padding:4px 10px;gap:6px}
+.dash-pill b{font-size:15px}
 .dash-ui{gap:8px;padding:8px}
 .dash-msg{font-size:17px}
 .dash-note{font-size:13px}.dash-note b{font-size:15px}
@@ -63,30 +63,22 @@
   const orderLink = document.querySelector('a[data-order="whatsapp"]');
   const section = document.createElement('section');
   section.className = 'dash';
-  section.setAttribute('aria-labelledby', 'dash-title');
+  section.setAttribute('aria-label', 'Dodo Dash mini game');
   section.innerHTML = `
-  <div class="dash-card">
-    <div class="dash-head">
-      <div class="dash-titles">
-        <p class="fc-label">Mini game</p>
-        <h2 id="dash-title">Dodo <span>Dash</span></h2>
-        <p class="dash-sub">Help our rider grab the dodo on the way to you. Jump the peppers, cones and potholes.</p>
-      </div>
-      <div class="dash-scores">
+    <div class="dash-stage" tabindex="0" aria-label="Dodo Dash game. Press Space or Enter to start" aria-describedby="dash-hint">
+      <canvas aria-hidden="true"></canvas>
+      <div class="dash-scores" aria-hidden="true">
         <div class="dash-pill"><span>Score</span><b data-score>0</b></div>
         <div class="dash-pill"><span>Best</span><b data-best>0</b></div>
       </div>
-    </div>
-    <div class="dash-stage" tabindex="0" aria-label="Dodo Dash game" aria-describedby="dash-hint">
-      <canvas aria-hidden="true"></canvas>
       <div class="dash-ui" data-ui></div>
     </div>
     <p class="dash-hint" id="dash-hint">
-      <span class="dash-keys"><span class="dash-k">Space</span> or <span class="dash-k">↑</span> to jump, hold for a bigger jump. <span class="dash-k">P</span> pauses.</span>
-      <span class="dash-touch">Tap to jump, hold for a bigger jump.</span>
+      <span class="dash-go"><span class="dash-keys"><span class="dash-k">Click</span> or <span class="dash-k">Space</span> to start</span><span class="dash-touch"><span class="dash-k">Tap</span> to start</span></span>
+      <span class="dash-play"><span class="dash-keys"><span class="dash-k">Space</span> or <span class="dash-k">↑</span> to jump, hold for a bigger jump. <span class="dash-k">P</span> pauses.</span>
+      <span class="dash-touch">Tap to jump, hold for a bigger jump.</span></span>
     </p>
-    <p class="sr-only" aria-live="polite" data-live></p>
-  </div>`;
+    <p class="sr-only" aria-live="polite" data-live></p>`;
   footer.after(section);
 
   const stage = section.querySelector('.dash-stage');
@@ -603,15 +595,15 @@
 
   function showUI(html, focusSel) {
     ui.innerHTML = html;
-    ui.classList.remove('is-off');
+    ui.classList.remove('is-off', 'is-idle');
     if (focusSel) ui.querySelector(focusSel)?.focus({ preventScroll: true });
   }
   function hideUI() { ui.classList.add('is-off'); }
 
   function idleScreen() {
-    showUI(`<p class="dash-msg">Ready, rider?</p>
-      <p class="dash-note">Grab the dodo. Jump the peppers, cones and potholes.</p>
-      <div class="dash-actions"><button type="button" class="btn btn-primary" data-act="play">Start riding</button></div>`);
+    // looks like part of the page until someone tries it
+    showUI('');
+    ui.classList.add('is-idle');
   }
 
   function gameOver() {
@@ -651,6 +643,7 @@
       started = true;
     }
     hideUI();
+    section.classList.add('is-on');
     stage.classList.add('is-playing');
     stage.focus({ preventScroll: true });
     const r = stage.getBoundingClientRect();
@@ -672,6 +665,7 @@
     if (state === 'play') { e.preventDefault(); press(); }
     else if (state === 'idle' || state === 'over' || state === 'paused') { e.preventDefault(); if (!cooling()) begin(); }
   });
+  section.querySelector('.dash-go').addEventListener('click', () => { if (state === 'idle') begin(); });
   window.addEventListener('pointerup', release);
   window.addEventListener('pointercancel', release);
 
